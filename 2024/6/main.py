@@ -89,5 +89,5 @@ def question_two(grid):
 
 if __name__ == "__main__":
     game_input = read_input(fname="input.txt")
-    #print(question_one(game_input))
+    print(question_one(game_input))
     print(question_two(game_input))

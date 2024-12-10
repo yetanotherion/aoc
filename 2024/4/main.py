@@ -6,11 +6,17 @@ def read_input(fname="input.txt"):
 def dfs(grid, curr_coord):
     res = []
     to_explore = []
-    for next_move in [(-1, 0), (-1, -1), (-1, 1),
-                      (1, 0), (1, 1), (1, -1),
-                      (0, -1), (0, 1)]:
-        to_explore.append((([curr_coord], next_move),
-                           "XMAS"))
+    for next_move in [
+        (-1, 0),
+        (-1, -1),
+        (-1, 1),
+        (1, 0),
+        (1, 1),
+        (1, -1),
+        (0, -1),
+        (0, 1),
+    ]:
+        to_explore.append((([curr_coord], next_move), "XMAS"))
     while to_explore:
         ((candidate, next_move), remaining) = to_explore.pop()
         curr_i, curr_j = candidate[-1]
@@ -24,8 +30,7 @@ def dfs(grid, curr_coord):
         next_i, next_j = curr_i + move_i, curr_j + move_j
         if next_i < 0 or next_i >= len(grid) or next_j < 0 or next_j >= len(grid[0]):
             continue
-        to_explore.append(((candidate + [(next_i, next_j)], next_move),
-                           remaining[1:]))
+        to_explore.append(((candidate + [(next_i, next_j)], next_move), remaining[1:]))
     return res
 
 
@@ -55,7 +60,9 @@ def is_xmas(grid, curr_coord):
     def diag_ok(left, right):
         return sorted([left, right]) == ["M", "S"]
 
-    return diag_ok(diag_left_up, diag_right_down) and diag_ok(diag_left_down, diag_right_up)
+    return diag_ok(diag_left_up, diag_right_down) and diag_ok(
+        diag_left_down, diag_right_up
+    )
 
 
 def question_two(game_input):
@@ -65,7 +72,6 @@ def question_two(game_input):
             if is_xmas(game_input, (i, j)):
                 res += 1
     return res
-
 
 
 if __name__ == "__main__":

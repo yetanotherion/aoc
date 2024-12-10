@@ -73,8 +73,6 @@ def question_two(game_input):
     return sum(update[len(update) // 2] for update in res)
 
 
-
-
 if __name__ == "__main__":
     raw_input = read_input(fname="input.txt")
     game_input = parse_input(raw_input)

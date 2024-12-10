@@ -7,7 +7,7 @@ def find_all_nines(grid):
     res = []
     for i, l in enumerate(grid):
         for j, e in enumerate(l):
-            if e == '9':
+            if e == "9":
                 res.append((i, j))
     return res
 
@@ -26,7 +26,12 @@ def dfs(grid, start):
         curr_elm = int(grid[curr_i][curr_j])
         for move in [UP, RIGHT, LEFT, DOWN]:
             next_i, next_j = curr_i + move[0], curr_j + move[1]
-            if next_i < 0 or next_i >= len(grid) or next_j < 0 or next_j >= len(grid[0]):
+            if (
+                next_i < 0
+                or next_i >= len(grid)
+                or next_j < 0
+                or next_j >= len(grid[0])
+            ):
                 continue
             if (next_i, next_j) in path:
                 continue

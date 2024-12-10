@@ -5,6 +5,7 @@ def read_input(fname="input.txt"):
     with open(fname, "r") as f:
         return [l[:-1] for l in f.readlines()]
 
+
 def antinode(l, r):
     l_i, l_j = l
     r_i, r_j = r

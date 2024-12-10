@@ -5,16 +5,19 @@ def read_input(fname="input.txt"):
     with open(fname, "r") as f:
         return [l[:-1] for l in f.readlines()]
 
+
 def find_starting_point(grid):
     for i, line in enumerate(grid):
         for j, elt in enumerate(line):
             if elt == "^":
                 return (i, j)
 
+
 UP = (-1, 0)
 RIGHT = (0, 1)
 LEFT = (0, -1)
 DOWN = (1, 0)
+
 
 def rotate(curr_dir):
     if curr_dir == UP:
@@ -80,7 +83,9 @@ def question_two(grid):
         if next_elt == "#":
             curr_dir = rotate(curr_dir)
             continue
-        if (next_i, next_j) not in seen and browse_until_cycle(grid, ((curr_i, curr_j), rotate(curr_dir)), visited, (next_i, next_j)):
+        if (next_i, next_j) not in seen and browse_until_cycle(
+            grid, ((curr_i, curr_j), rotate(curr_dir)), visited, (next_i, next_j)
+        ):
             obstacles.add((next_i, next_j))
         curr_i, curr_j = next_i, next_j
         seen.add((curr_i, curr_j))

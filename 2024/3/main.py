@@ -5,6 +5,7 @@ def parse_input(fname="input.txt"):
     with open(fname, "r") as f:
         return f.read()
 
+
 def question_one(game_input):
     expression = r"mul\((\d{1,3}),(\d{1,3})\)"
     matched = re.findall(expression, game_input)

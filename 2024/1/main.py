@@ -4,13 +4,14 @@ def read_input(fname="input.txt"):
 
 
 def parse_input(game_input):
-    return [(int(l[0:5]), int(l[8:-1]))
-            for l in game_input]
+    return [(int(l[0:5]), int(l[8:-1])) for l in game_input]
+
 
 def question_one(tuples):
     left = sorted([x[0] for x in tuples])
     right = sorted(x[1] for x in tuples)
     return sum(abs(x - y) for (x, y) in zip(left, right))
+
 
 def question_two(tuples):
     left = sorted([x[0] for x in tuples])
@@ -30,6 +31,7 @@ def question_two(tuples):
     return res
 
     return sum(abs(x - y) for (x, y) in zip(left, right))
+
 
 if __name__ == "__main__":
     game_input = parse_input(read_input())

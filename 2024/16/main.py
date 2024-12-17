@@ -80,12 +80,11 @@ def dijkstra(grid):
     seen = set()
     while to_browse:
         curr = to_browse.pop()
-        if curr[0] == end_i and curr[1] == end_j:
-            all_nodes.add((end_i, end_j))
-            continue
         if curr in seen:
             continue
         all_nodes.add((curr[0], curr[1]))
+        if curr[0] == end_i and curr[1] == end_j:
+            continue
         for x in prev[curr]:
             to_browse.append(x)
         seen.add(curr)

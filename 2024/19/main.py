@@ -29,10 +29,12 @@ def question_one(towels, designs):
 
 def question_two(towels, designs):
     res = 0
+    curr_res = {}
     for design in designs:
-        curr_res = {}
         for i in range(1, len(design) + 1):
             to_see = design[-i:]
+            if to_see in curr_res:
+                continue
             for towel in towels:
                 if to_see.startswith(towel):
                     remaining = to_see[len(towel) :]

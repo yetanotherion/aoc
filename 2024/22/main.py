@@ -16,12 +16,9 @@ def prune(x):
 
 
 def next_secret_number(secret_number):
-    next_v = secret_number * 64
-    secret_number = prune(mix(next_v, secret_number))
-    next_v = secret_number // 32
-    secret_number = prune(mix(next_v, secret_number))
-    next_v = secret_number * 2048
-    return prune(mix(next_v, secret_number))
+    secret_number = prune(mix(secret_number * 64, secret_number))
+    secret_number = prune(mix(secret_number // 32, secret_number))
+    return prune(mix(secret_number * 2048, secret_number))
 
 
 def question_one(numbers):

@@ -13,7 +13,6 @@ def parse_input(lines):
         if not l:
             continue
         if "Register" in l:
-
             (register, value) = tuple(x.strip() for x in l.split(":"))
             register_name = register[len("Register ") :]
             registers[register_name] = int(value)

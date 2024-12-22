@@ -45,27 +45,40 @@ def shortest_path(grid):
         seen.add((curr_i, curr_j))
 
 
-def question_one(grid):
+def distance(left, right):
+    l_i, l_j = left
+    r_i, r_j = right
+    return abs(l_i - r_i) + abs(l_j - r_j)
+
+
+def find_cheats(grid, cheat_distance=2, threshold=100):
     shortest = shortest_path(grid)
     path_distance = {k: (i, len(shortest) - i) for i, k in enumerate(shortest)}
     cheats = set()
     for p, (done, remaining) in path_distance.items():
-        next_moves = set()
-        moves = [UP, RIGHT, DOWN, LEFT]
-        for first_move in moves:
-            for snd_move in moves:
-                all_move = first_move[0] + snd_move[0], first_move[1] + snd_move[1]
-                next_i, next_j = p[0] + all_move[0], p[1] + all_move[1]
-                next_moves.add((next_i, next_j))
-        for next_i, next_j in next_moves:
+        close_enough = [x for x in path_distance if distance(p, x) <= cheat_distance]
+        for next_i, next_j in close_enough:
             if (next_i, next_j) in path_distance:
-                new_distance = done + 2 + path_distance[(next_i, next_j)][1]
+                new_distance = (
+                    done
+                    + distance(p, (next_i, next_j))
+                    + path_distance[(next_i, next_j)][1]
+                )
                 diff = len(shortest) - new_distance
-                if diff >= 100:
+                if diff >= threshold:
                     cheats.add((p, (next_i, next_j), diff))
     return len(cheats)
+
+
+def question_one(grid):
+    return find_cheats(grid, cheat_distance=2, threshold=100)
+
+
+def question_two(grid):
+    return find_cheats(grid, cheat_distance=20, threshold=100)
 
 
 if __name__ == "__main__":
     grid = read_lines(fname="input.txt")
     print(question_one(grid))
+    print(question_two(grid))

@@ -1,3 +1,6 @@
+import itertools
+
+
 def read_lines(fname="input.txt"):
     with open(fname) as f:
         return [l[:-1] for l in f.readlines()]
@@ -70,8 +73,12 @@ def compute_shortest_path(grid, mem, start, end):
     return computed
 
 
-def resolve_sequence(sequence, mem, keypad, keypad_coordinates, one_only=False):
-    to_browse = [([], keypad_coordinates["A"], sequence)]
+def resolve_sequence(
+    sequence, mem, keypad, keypad_coordinates, first=None, one_only=False
+):
+    if first is None:
+        first = keypad_coordinates["A"]
+    to_browse = [([], first, sequence)]
     res = []
     while to_browse:
         curr_path, curr_coord, remaining = to_browse.pop()
@@ -95,32 +102,58 @@ def resolve_first(sequence, mem):
     return resolve_sequence(sequence, mem, first_keypad, first_keypad_coordinates)
 
 
-def resolve_snd(sequence, mem, one_only=False):
-    return resolve_sequence(
-        sequence, mem, snd_keypad, snd_keypad_coordinates, one_only=one_only
+_mem_snd = {}
+
+
+def shortest_snd(digit_one, digit_two):
+    return compute_shortest_path(
+        snd_keypad,
+        _mem_snd,
+        snd_keypad_coordinates[digit_one],
+        snd_keypad_coordinates[digit_two],
     )
 
 
-def question_one(codes):
+def fill_mem(max_level=25):
+    all_digits = ["A", "^", "<", "v", ">"]
+    mem = {}
+    for i in range(0, max_level + 1):
+        for digit_before in all_digits:
+            for digit_after in all_digits:
+                key = (digit_before, digit_after, i)
+                if i == 0:
+                    mem[key] = 1
+                    continue
+                all_possibilities = []
+                shortest_path = shortest_snd(digit_before, digit_after)
+                for p in shortest_path:
+                    new_p = ["A"] + p[:] + ["A"]
+                    curr_res = sum(
+                        mem[(a, b, i - 1)] for a, b in itertools.pairwise(new_p)
+                    )
+                    all_possibilities.append(curr_res)
+                mem[key] = min(all_possibilities)
+    return mem
+
+
+def solve(codes, n):
     mem_first = {}
-    mem_snd = {}
+    mem = fill_mem(max_level=n)
     res = []
     for digit in codes:
         first_code = resolve_first(digit, mem_first)
-        to_browse = []
-        for f in first_code:
-            snd_code = resolve_snd(f, mem_snd)
-            to_browse.extend(snd_code)
-        curr_res = []
-        for s in to_browse:
-            snd_code = resolve_snd(s, mem_snd, one_only=True)
-            curr_res.extend(snd_code)
-        shortest = sorted(curr_res, key=lambda x: len(x))[0]
+        shortest = min(
+            [
+                sum(mem[(a, b, n)] for (a, b) in itertools.pairwise(["A"] + f))
+                for f in first_code
+            ]
+        )
         complexity = int("".join(x for x in digit if x != "A"))
-        res.append(len(shortest) * complexity)
+        res.append(shortest * complexity)
     return sum(res)
 
 
 if __name__ == "__main__":
     codes = read_lines(fname="input.txt")
-    print(question_one(codes))
+    print(solve(codes, 2))
+    print(solve(codes, 25))

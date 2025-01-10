@@ -173,7 +173,7 @@ def question_two(wires, max_i=45):
     curr_wire = wires
     dependencies = build_dependencies(wires)
     candidates = [
-        k for k in dependencies.keys() if not k.startswith("x") or k.startswith("y")
+        k for k in dependencies.keys() if not (k.startswith("x") or k.startswith("y"))
     ]
     for i in range(1, max_i):
         if validate(curr_wire, i):

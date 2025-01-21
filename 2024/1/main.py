@@ -30,8 +30,6 @@ def question_two(tuples):
             right_idx += 1
     return res
 
-    return sum(abs(x - y) for (x, y) in zip(left, right))
-
 
 if __name__ == "__main__":
     game_input = parse_input(read_input())

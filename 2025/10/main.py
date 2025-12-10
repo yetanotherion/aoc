@@ -32,13 +32,6 @@ def press_button(curr_button, buttons):
     return tuple(new_button)
 
 
-def press_button_two(curr_button, buttons):
-    new_button = list(curr_button)
-    for b in buttons:
-        new_button[b] = curr_button[b] + 1
-    return tuple(new_button)
-
-
 def solve(targets, buttons):
     targets = tuple(targets)
     curr_button = tuple(False for _ in range(len(targets)))

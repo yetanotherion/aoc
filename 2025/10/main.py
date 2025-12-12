@@ -59,7 +59,6 @@ def solve_two(targets, buttons):
     from scipy.optimize import linprog
 
     c = [1 for _ in range(len(buttons))]
-    b_eq = np.array(list(targets))
     a_array = []
     for i in range(len(targets)):
         curr_a = [0 for _ in range(len(buttons))]
@@ -71,7 +70,7 @@ def solve_two(targets, buttons):
     result = linprog(
         c,
         A_eq=a_array,
-        b_eq=b_eq,
+        b_eq=targets,
         bounds=bounds,
         integrality=[1 for _ in range(len(buttons))],
     )

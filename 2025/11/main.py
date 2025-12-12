@@ -3,6 +3,16 @@ def read_lines(fname):
         return [l[:-1] for l in f.readlines() if l[:-1]]
 
 
+def load_graph(fname):
+    lines = read_lines(fname)
+    graph = {}
+    for l in lines:
+        origin, destination = l.split(":")
+        destinations = [x.strip() for x in destination.split(" ") if x.strip()]
+        graph[origin] = destinations
+    return graph
+
+
 def all_paths(
     graph,
     memory=None,
@@ -19,16 +29,6 @@ def all_paths(
         if n not in memory:
             memory[n] = all_paths(graph, memory=memory, start=n, out=out, skip=skip)
     return sum(memory[n] for n in next)
-
-
-def load_graph(fname):
-    lines = read_lines(fname)
-    graph = {}
-    for l in lines:
-        origin, destination = l.split(":")
-        destinations = [x.strip() for x in destination.split(" ") if x.strip()]
-        graph[origin] = destinations
-    return graph
 
 
 def question_one(fname):

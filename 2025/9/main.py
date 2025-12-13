@@ -10,11 +10,16 @@ def area(l, r):
     return (abs(r[0] - l[0]) + 1) * (abs(r[1] - l[1]) + 1)
 
 
-def question_one(fname):
+def load_coordinates(fname):
     lines = read_input(fname)
     coordinates = []
     for l in lines:
         coordinates.append(tuple(int(x) for x in l.split(",")))
+    return coordinates
+
+
+def question_one(fname):
+    coordinates = load_coordinates(fname)
     max_area = 0
     for i, c in enumerate(coordinates[:-1]):
         for j in range(i + 1, len(coordinates)):
@@ -64,10 +69,7 @@ def draw_segments(points, chosen_points):
 
 
 def question_two(fname):
-    lines = read_input(fname)
-    coordinates = []
-    for l in lines:
-        coordinates.append(tuple(int(x) for x in l.split(",")))
+    coordinates = load_coordinates(fname)
     segments = list(pairwise(coordinates))
     segments.append((coordinates[-1], coordinates[0]))
 

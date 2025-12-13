@@ -69,6 +69,8 @@ def question_two(fname):
     for l in lines:
         coordinates.append(tuple(int(x) for x in l.split(",")))
     segments = list(pairwise(coordinates))
+    segments.append((coordinates[-1], coordinates[0]))
+
     biggest = sorted(
         segments,
         key=lambda x: abs(x[0][0] - x[1][0]) + abs(x[0][1] - x[1][1]),
@@ -82,13 +84,11 @@ def question_two(fname):
     candidates = [(first, c) for c in first_candidates]
     candidates.extend([(second, c) for c in second_candidates])
 
-    segments.append((coordinates[-1], coordinates[0]))
-    seen_coordinates = set(coordinates)
     max_area = 0
 
     chosen = []
     for a, b in candidates:
-        if rectangle_inside(a, b, seen_coordinates):
+        if rectangle_inside(a, b, coordinates):
             curr_area = area(a, b)
             if curr_area > max_area:
                 chosen.append(rectangle(a, b))

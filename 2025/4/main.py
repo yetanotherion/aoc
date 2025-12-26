@@ -17,7 +17,7 @@ moves = [UP, DOWN, LEFT, RIGHT, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT]
 
 def adjacent(i, j, lines):
     res = []
-    for (di, dj) in moves:
+    for di, dj in moves:
         ni = i + di
         nj = j + dj
         if not (0 <= ni < len(lines) and 0 <= nj < len(lines[0])):

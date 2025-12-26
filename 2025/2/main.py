@@ -17,13 +17,14 @@ def invalid_digit_one(x):
 def invalid_digit_two(x):
     for l in range(1, len(x) // 2 + 1):
         seq_start = range(0, len(x), l)
-        sequences = [x[s:s+l] for s in seq_start]
+        sequences = [x[s : s + l] for s in seq_start]
         if any(not x for x in sequences):
             continue
         sequences = set(int(x) for x in sequences)
         if len(sequences) == 1:
             return True
     return False
+
 
 def run(invalid, fname):
     content = read_input(fname)

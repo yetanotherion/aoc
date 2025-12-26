@@ -43,8 +43,7 @@ def question_two(fname):
         if not operation.strip():
             continue
         f = f_from_op(operation)
-        curr_result = functools.reduce(lambda acc, x: f(acc, x),
-                                       curr_numbers)
+        curr_result = functools.reduce(lambda acc, x: f(acc, x), curr_numbers)
         res += curr_result
         curr_numbers = []
     return res

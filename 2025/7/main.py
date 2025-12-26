@@ -59,9 +59,9 @@ def question_two(fname):
             l_j = j - 1
             r_j = j + 1
             if l_j >= 0:
-                memory[i][j] += memory[i+1][l_j]
+                memory[i][j] += memory[i + 1][l_j]
             if r_j < max_j:
-                memory[i][j] += memory[i+1][r_j]
+                memory[i][j] += memory[i + 1][r_j]
     return memory[start_i][start_j]
 
 
